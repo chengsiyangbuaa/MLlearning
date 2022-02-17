@@ -1,4 +1,3 @@
-from unittest import TestLoader
 from numpy import *
 import operator
 
@@ -58,14 +57,6 @@ def autoNorm(dataset):
     normDataset = (dataset-min)/ranges
     sample_number = dataset.shape[0]
     return normDataset, ranges, sample_number
-    # minVals = dataset.min(0)
-    # maxVals = dataset.max(0)
-    # ranges = maxVals -minVals
-    # normDataSet = zeros(shape(dataset))
-    # m = dataset.shape[0]
-    # normDataSet = dataset - tile(minVals,(m,1))
-    # normDataSet = normDataSet/tile(ranges,(m,1))
-    # return normDataSet,ranges,minVals
 
 def split_dataset(dataset,hoRatio):
     total_sample_number = dataset.shape[0]
