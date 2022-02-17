@@ -21,6 +21,15 @@ def creatDataset():
     labels = ['A','A','B','B']
     return group, labels
 
+def image2vector(filepath):
+    return_vector = zeros(1024)
+    f = open(filepath,'r')
+    for i in range(32):
+        strline = f.readline()
+        for j in range(32):
+            return_vector[i*32+j] = strline[j]
+    return return_vector
+
 def file2matrix(filepath,split_item=' ',need_strip = False):
     fr = open(filepath,mode="r")
     arrayLines = fr.readlines()
@@ -75,7 +84,7 @@ def split_data(dataset,labels,hoRatio):
     train_labels, test_labels = split_labels(labels,hoRatio)
     return train_data, test_data, train_labels, test_labels
 
-def kNNTest(dataset,labels,hoRatio = 0.1,k=5):
+def kNNTest(dataset,labels,hoRatio= 0.1,k=5):
     total_sample_number = labels.shape[0]
     train_data, test_data, train_labels, test_labels=split_data(dataset,labels,hoRatio)
     test_sample_namber = test_labels.shape[0]
@@ -84,7 +93,14 @@ def kNNTest(dataset,labels,hoRatio = 0.1,k=5):
         classify_result = classify0(test_data[i],train_data,train_labels,k)
         if classify_result == test_labels[i]:
             right_count += 1
-    return right_count/test_sample_namber
+    return (test_sample_namber-right_count)/test_sample_namber
 
-
+def kNNTest2(train_data, test_data, train_labels, test_labels,k=5):
+    test_sample_namber = test_labels.shape[0]
+    right_count = 0
+    for i in range(test_sample_namber):
+        classify_result = classify0(test_data[i],train_data,train_labels,k)
+        if classify_result == test_labels[i]:
+            right_count += 1
+    return (test_sample_namber-right_count)/test_sample_namber
 
